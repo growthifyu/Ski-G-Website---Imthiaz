@@ -1,70 +1,10 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Section, FadeIn } from "@/components/SectionComponents";
 import Layout from "@/components/Layout";
 import { Send, Loader2, MapPin, Phone, Mail, Factory } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import heroImage from "@/assets/hero-solar.jpg";
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    location: "",
-    propertyType: "Home",
-    billRange: "",
-    message: "",
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const params = new URLSearchParams(window.location.search);
-
-      let userIp = "";
-      try {
-        const ipRes = await fetch("https://api.ipify.org?format=json");
-        const ipData = await ipRes.json();
-        userIp = ipData.ip;
-      } catch { }
-
-      const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: {
-          ...form,
-          pageUrl: window.location.href,
-          userIp,
-          utmSource: params.get("utm_source") || "",
-          utmMedium: params.get("utm_medium") || "",
-          utmCampaign: params.get("utm_campaign") || "",
-        },
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Enquiry submitted",
-        description: "We'll get back to you shortly with the next steps.",
-      });
-      setForm({ name: "", phone: "", location: "Chennai", propertyType: "Home", billRange: "", message: "" });
-    } catch (err) {
-      console.error("Contact form error:", err);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again or contact us directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <Layout>
       <section className="relative py-24 md:py-32 overflow-hidden">
