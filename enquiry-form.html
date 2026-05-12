@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Your Free Solar Consultation – Ski-G Energies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --orange: #E8610A;
+      --orange-hover: #C9520A;
+      --orange-light: #FFF4ED;
+      --orange-ring: rgba(232, 97, 10, 0.22);
+      --text-primary: #111827;
+      --text-secondary: #6B7280;
+      --text-muted: #9CA3AF;
+      --border: #E5E7EB;
+      --border-focus: #E8610A;
+      --bg-page: #F3F4F6;
+      --bg-card: #FFFFFF;
+      --radius-input: 10px;
+      --radius-card: 20px;
+      --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 20px 60px -10px rgba(0, 0, 0, 0.10);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-page);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      color: var(--text-primary);
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      width: 100%;
+      max-width: 620px;
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative top accent bar */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--orange), #F59E0B);
+      border-radius: var(--radius-card) var(--radius-card) 0 0;
+    }
+
+    /* Header */
+    .card-header {
+      margin-bottom: 36px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--orange-light);
+      color: var(--orange);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    .badge svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .card-subtitle {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Form */
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.01em;
+    }
+
+    label .req {
+      color: var(--orange);
+      margin-left: 2px;
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 14.5px;
+      color: var(--text-primary);
+      background: #FAFAFA;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-input);
+      padding: 13px 16px;
+      width: 100%;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: #D1D5DB;
+      background: #FFFFFF;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--border-focus);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px var(--orange-ring);
+    }
+
+    /* Custom select arrow */
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper select {
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .select-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--text-muted);
+      pointer-events: none;
+      transition: border-top-color 0.18s;
+    }
+
+    .select-wrapper:focus-within::after {
+      border-top-color: var(--orange);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.55;
+    }
+
+    /* CTA Button */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--orange) 0%, #F07820 100%);
+      color: #FFFFFF;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: none;
+      border-radius: var(--radius-input);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 4px 16px rgba(232, 97, 10, 0.35);
+      margin-top: 4px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(232, 97, 10, 0.45);
+    }
+
+    .btn:hover::before {
+      opacity: 1;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(232, 97, 10, 0.35);
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Trust bar */
+    .trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .trust-item svg {
+      width: 13px;
+      height: 13px;
+      color: #22C55E;
+      flex-shrink: 0;
+    }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+    }
+
+    /* Mobile */
+    @media (max-width: 560px) {
+      .card {
+        padding: 36px 24px 32px;
+      }
+
+      .card-title {
+        font-size: 22px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .trust {
+        gap: 10px;
+      }
+
+      .divider {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+        </svg>
+        Free Consultation
+      </div>
+      <h1 class="card-title">Get Your Free Solar Consultation</h1>
+      <p class="card-subtitle">Tell us about your property and we'll design the perfect solar solution — no obligations,
+        no pressure.</p>
+    </div>
+
+    <div style="width: 100%; height: 625px; overflow: hidden; display: flex; justify-content: center;">
+      <iframe frameborder="0"
+        style="height: 500px; width: 80%; border: none; transform: scale(1.25); transform-origin: top center;"
+        src="https://zcform.in/gcHti"></iframe>
+    </div>
+  </div>
+
+</body>
+
+</html>

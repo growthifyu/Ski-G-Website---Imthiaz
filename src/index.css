@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 228 14% 96%;
+    --foreground: 226 28% 17%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 226 28% 17%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 226 28% 17%;
+
+    --primary: 232 34% 27%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 228 14% 93%;
+    --secondary-foreground: 226 28% 17%;
+
+    --muted: 228 14% 93%;
+    --muted-foreground: 226 10% 45%;
+
+    --accent: 23 90% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 228 14% 88%;
+    --input: 228 14% 88%;
+    --ring: 23 90% 50%;
+
+    --radius: 0.5rem;
+
+    --navy: 232 34% 27%;
+    --navy-light: 232 28% 35%;
+    --accent-dark: 23 90% 42%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 232 30% 10%;
+    --foreground: 228 14% 96%;
+    --card: 232 30% 14%;
+    --card-foreground: 228 14% 96%;
+    --popover: 232 30% 14%;
+    --popover-foreground: 228 14% 96%;
+    --primary: 23 90% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 232 25% 18%;
+    --secondary-foreground: 228 14% 96%;
+    --muted: 232 25% 18%;
+    --muted-foreground: 232 10% 60%;
+    --accent: 23 90% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 232 20% 20%;
+    --input: 232 20% 20%;
+    --ring: 23 90% 50%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
