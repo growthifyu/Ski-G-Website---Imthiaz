@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { Section, SectionHeading, SectionSubheading } from "@/components/SectionComponents";
 import sankarImg from "@/assets/sankar-ganesh.jpg";
-import imthiazImg from "@/assets/imthiaz.jpg";
+import imthiazImg from "@/assets/imthiaz.jpeg";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
   <motion.div

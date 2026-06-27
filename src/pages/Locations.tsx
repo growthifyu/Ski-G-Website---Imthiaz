@@ -82,19 +82,27 @@ const Locations = () => {
               <div className="space-y-4 text-muted-foreground">
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-accent shrink-0" />
-                  <span><a href="tel:+919791322632" className="hover:text-accent transition-colors">+91 9791 322 632</a> | <a href="tel:+919952224998" className="hover:text-accent transition-colors">+91 9952224998</a></span>
+                  <span><a href="tel:+919500092381" className="hover:text-accent transition-colors">+91 9500092381</a></span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-accent shrink-0" />
-                  <a href="mailto:Solarprojects@ski-g.com" className="hover:text-accent transition-colors">Solarprojects@ski-g.com</a>
+                <div className="flex items-start gap-3">
+                  <Mail className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                  <div className="flex flex-col">
+                    <a href="mailto:info@ski-g.com" className="hover:text-accent transition-colors">info@ski-g.com</a>
+                    <a href="mailto:connect@ski-g.com" className="hover:text-accent transition-colors">connect@ski-g.com</a>
+                  </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-foreground">Solar Knowledge Industries Group Private Ltd.</p>
-                    <p>4A3, Olympia Towers</p>
-                    <p>Lattice Bridge Road, Adyar</p>
-                    <p>Chennai – 600041</p>
+                    <div className="mt-2 text-sm text-muted-foreground">
+                      <p className="text-xs font-semibold text-accent uppercase tracking-wider">Registered Office</p>
+                      <p className="mt-0.5">4A3, Olympia Towers, Lattice Bridge Road, Adyar, Chennai – 600041</p>
+                    </div>
+                    <div className="mt-2 text-sm text-muted-foreground">
+                      <p className="text-xs font-semibold text-accent uppercase tracking-wider">Branch Office</p>
+                      <p className="mt-0.5">SKI-G Energies, 2nd Floor, The Palms, 2/675, Balaji Nagar 1st St, Neelankarai, Chennai – 600115, Tamil Nadu.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -137,11 +145,14 @@ const Locations = () => {
               <div className="space-y-4 text-muted-foreground">
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-accent shrink-0" />
-                  <a href="tel:+971506053728" className="hover:text-accent transition-colors">+971 5060 537 28</a>
+                  <a href="tel:+971506053728" className="hover:text-accent transition-colors">+971 506053728</a>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-accent shrink-0" />
-                  <a href="mailto:m.imthiaz@ski-g.com" className="hover:text-accent transition-colors">m.imthiaz@ski-g.com</a>
+                <div className="flex items-start gap-3">
+                  <Mail className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                  <div className="flex flex-col">
+                    <a href="mailto:info@ski-g.com" className="hover:text-accent transition-colors">info@ski-g.com</a>
+                    <a href="mailto:connect@ski-g.com" className="hover:text-accent transition-colors">connect@ski-g.com</a>
+                  </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-accent shrink-0 mt-0.5" />

@@ -6,12 +6,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import skigLogo from "@/assets/skig-logo.png";
 
 const navLinks = [
-{ label: "Home", to: "/" },
-{ label: "About", to: "/about" },
-{ label: "Services", to: "/services" },
-{ label: "Locations", to: "/locations" },
-{ label: "Projects", to: "/projects" },
-{ label: "Contact", to: "/contact" }];
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
+  { label: "Services", to: "/services" },
+  { label: "ESS", to: "/ess" },
+  { label: "Locations", to: "/locations" },
+  { label: "Projects", to: "/projects" },
+  { label: "Contact", to: "/contact" }
+];
 
 
 const Navbar = () => {

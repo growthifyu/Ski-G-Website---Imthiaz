@@ -37,18 +37,7 @@ const Contact = () => {
 
           <FadeIn delay={0.15}>
             <div className="space-y-6">
-              <div className="bg-card rounded-xl p-6 border border-border shadow-sm">
-                <h3 className="font-heading font-semibold text-lg mb-4">Director</h3>
-                <p className="font-semibold">Sankar Ganesh</p>
-                <div className="flex items-center gap-2 mt-2 text-muted-foreground text-sm">
-                  <Phone className="w-4 h-4 text-accent" />
-                  <a href="tel:+919952224998">+91 99522 24998</a>
-                </div>
-                <div className="flex items-center gap-2 mt-1.5 text-muted-foreground text-sm">
-                  <Mail className="w-4 h-4 text-accent" />
-                  <a href="mailto:S.ganesh@ski-g.com">S.ganesh@ski-g.com</a>
-                </div>
-              </div>
+
 
               <div className="bg-card rounded-xl p-6 border border-border shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
@@ -65,14 +54,27 @@ const Contact = () => {
                   <h3 className="font-heading font-semibold text-lg">Chennai</h3>
                 </div>
                 <p className="font-semibold text-sm">Solar Knowledge Industries Group Private Ltd.</p>
-                <p className="text-sm text-muted-foreground mt-1">4A3, Olympia Towers, Lattice Bridge Road, Adyar, Chennai – 600041</p>
-                <div className="flex items-center gap-2 mt-2 text-muted-foreground text-sm">
-                  <Phone className="w-4 h-4 text-accent" />
-                  <span><a href="tel:+919791322632">+91 9791 322 632</a> | <a href="tel:+919952224998">+91 9952224998</a></span>
+                
+                <div className="mt-3">
+                  <p className="text-xs font-semibold text-accent uppercase tracking-wider">Registered Office</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">4A3, Olympia Towers, Lattice Bridge Road, Adyar, Chennai – 600041</p>
                 </div>
-                <div className="flex items-center gap-2 mt-1.5 text-muted-foreground text-sm">
-                  <Mail className="w-4 h-4 text-accent" />
-                  <a href="mailto:Solarprojects@ski-g.com">Solarprojects@ski-g.com</a>
+                
+                <div className="mt-3">
+                  <p className="text-xs font-semibold text-accent uppercase tracking-wider">Branch Office</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">SKI-G Energies, 2nd Floor, The Palms, 2/675, Balaji Nagar 1st St, Neelankarai, Chennai – 600115, Tamil Nadu.</p>
+                </div>
+
+                <div className="flex items-center gap-2 mt-4 text-muted-foreground text-sm">
+                  <Phone className="w-4 h-4 text-accent" />
+                  <span><a href="tel:+919500092381">+91 9500092381</a></span>
+                </div>
+                <div className="flex items-start gap-2 mt-2 text-muted-foreground text-sm">
+                  <Mail className="w-4 h-4 text-accent mt-0.5" />
+                  <div className="flex flex-col">
+                    <a href="mailto:info@ski-g.com" className="hover:text-accent transition-colors">info@ski-g.com</a>
+                    <a href="mailto:connect@ski-g.com" className="hover:text-accent transition-colors">connect@ski-g.com</a>
+                  </div>
                 </div>
               </div>
 
@@ -85,15 +87,18 @@ const Contact = () => {
                 <p className="text-sm text-muted-foreground mt-1">Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba | PO 17965 | Dubai, UAE</p>
                 <div className="flex items-center gap-2 mt-2 text-muted-foreground text-sm">
                   <Phone className="w-4 h-4 text-accent" />
-                  <a href="tel:+971506053728">+971 5060 537 28</a>
+                  <a href="tel:+971506053728">+971 506053728</a>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 bg-card rounded-xl p-6 border border-border shadow-sm">
-                <Mail className="w-5 h-5 text-accent" />
+              <div className="flex items-start gap-3 bg-card rounded-xl p-6 border border-border shadow-sm">
+                <Mail className="w-5 h-5 text-accent mt-0.5" />
                 <div>
                   <p className="text-sm text-muted-foreground">General Enquiries</p>
-                  <a href="mailto:m.imthiaz@ski-g.com" className="font-semibold text-sm">m.imthiaz@ski-g.com</a>
+                  <div className="flex flex-col">
+                    <a href="mailto:info@ski-g.com" className="font-semibold text-sm hover:text-accent transition-colors">info@ski-g.com</a>
+                    <a href="mailto:connect@ski-g.com" className="font-semibold text-sm hover:text-accent transition-colors">connect@ski-g.com</a>
+                  </div>
                 </div>
               </div>
             </div>

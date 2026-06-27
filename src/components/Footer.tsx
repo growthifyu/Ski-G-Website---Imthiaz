@@ -33,7 +33,7 @@ const Footer = () => {
               <li><Link to="/services" className="hover:text-accent transition-colors">Solar EPC</Link></li>
               <li><Link to="/services" className="hover:text-accent transition-colors">Commercial Solar</Link></li>
               <li><Link to="/services" className="hover:text-accent transition-colors">Electrical Contracting</Link></li>
-              <li><Link to="/services" className="hover:text-accent transition-colors">Energy Storage (BESS)</Link></li>
+              <li><Link to="/ess" className="hover:text-accent transition-colors">Energy Storage (BESS)</Link></li>
               <li><Link to="/services" className="hover:text-accent transition-colors">Maintenance</Link></li>
             </ul>
           </div>
@@ -43,23 +43,22 @@ const Footer = () => {
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-accent" />
-                <span><a href="tel:+919791322632" className="hover:text-accent transition-colors">+91 9791 322 632</a> | <a href="tel:+919952224998" className="hover:text-accent transition-colors">+91 9952224998</a></span>
+                <span><a href="tel:+919500092381" className="hover:text-accent transition-colors">+91 9500092381</a></span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-accent" />
-                <a href="tel:+971506053728" className="hover:text-accent transition-colors">+971 5060 537 28</a>
+                <a href="tel:+971506053728" className="hover:text-accent transition-colors">+971 506053728</a>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-accent" />
-                <a href="mailto:Solarprojects@ski-g.com" className="hover:text-accent transition-colors">Solarprojects@ski-g.com</a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-accent" />
-                <a href="mailto:m.imthiaz@ski-g.com" className="hover:text-accent transition-colors">m.imthiaz@ski-g.com</a>
+              <li className="flex items-start gap-2">
+                <Mail className="w-4 h-4 text-accent mt-0.5" />
+                <div className="flex flex-col">
+                  <a href="mailto:info@ski-g.com" className="hover:text-accent transition-colors">info@ski-g.com</a>
+                  <a href="mailto:connect@ski-g.com" className="hover:text-accent transition-colors">connect@ski-g.com</a>
+                </div>
               </li>
               <li className="flex items-center gap-2">
                 <MessageCircle className="w-4 h-4 text-accent" />
-                <a href="https://wa.me/919791322632" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">WhatsApp</a>
+                <a href="https://wa.me/919500092381" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">WhatsApp</a>
               </li>
             </ul>
 

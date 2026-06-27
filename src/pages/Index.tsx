@@ -53,6 +53,7 @@ const services = [
     items: ["Custom battery sizing", "Solar storage integration", "Industrial backup power", "Reliable performance"],
     cta: "Explore Storage Options",
     image: storageImg,
+    to: "/ess",
   },
 ];
 
@@ -66,14 +67,102 @@ const executionBullets = [
 ];
 
 const faqs = [
-  { q: "How do I know what system size I need?", a: "We calculate based on your electricity consumption, roof area, and budget goals." },
-  { q: "How long does installation take?", a: "Residential solar projects are typically completed within 10–15 working days after approvals." },
-  { q: "What savings can I expect?", a: "Savings depend on system size and usage. We provide realistic estimates." },
-  { q: "Do you help with documentation or approvals?", a: "Yes, we guide you through required processes based on location." },
-  { q: "What maintenance is required?", a: "Periodic cleaning and system checks ensure stable performance." },
-  
-  { q: "Do you assist with government subsidy process?", a: "Yes. We manage complete documentation and approval process until subsidy credit." },
-  { q: "What is your service response time?", a: "Our team responds within 24 hours." },
+  {
+    q: "How do I know what system size I need?",
+    a: (
+      <div className="space-y-3">
+        <p>
+          System size depends on two things: your average monthly electricity consumption in units/kWh and your available rooftop space. As a rough guide, a typical Indian household consuming 300-500 units/month needs a 3-5 kW system, which requires about 200-350 sq. ft. of shadow-free roof space.
+        </p>
+        <p>
+          We don't guess. Our team conducts a proper site survey and load analysis before recommending anything. Share your electricity bill and location, and we'll give you a clear, no-obligation sizing recommendation.
+        </p>
+      </div>
+    ),
+  },
+  {
+    q: "How long does installation take?",
+    a: (
+      <div className="space-y-3">
+        <p>
+          For residential projects, we complete installation in 10-15 working days from the date of order confirmation. This includes delivery of components, structural mounting, wiring, and commissioning.
+        </p>
+        <p>
+          Commercial and industrial projects vary based on system size and site complexity. We'll give you a specific timeline in your proposal.
+        </p>
+      </div>
+    ),
+  },
+  {
+    q: "What savings can I expect?",
+    a: (
+      <div className="space-y-3">
+        <p>
+          Most residential customers see a 70-90% reduction in their electricity bill within the first month. A typical 5 kW system in Chennai can generate 550-600 units/month, offsetting most or all of a standard household's consumption.
+        </p>
+        <p>
+          ROI (return on investment) typically ranges from 4-6 years, after which the system generates essentially free electricity for the remaining 20+ years of its life. Exact savings depend on your tariff rate, consumption pattern, and system size. We'll show you the numbers in your proposal.
+        </p>
+      </div>
+    ),
+  },
+  {
+    q: "Do you help with documentation or approvals?",
+    a: (
+      <div className="space-y-3">
+        <p>
+          Yes, completely. We handle all paperwork including DISCOM electricity board approvals, net metering applications, and single-line diagram submissions. In India, we also assist with the PM Surya Ghar subsidy application, which can cover up to ₹78,000 for eligible residential systems.
+        </p>
+        <p>
+          For UAE projects, we coordinate with relevant local authorities and ensure compliance with DEWA or emirate-specific requirements.
+        </p>
+      </div>
+    ),
+  },
+  {
+    q: "What maintenance is required?",
+    a: (
+      <div className="space-y-3">
+        <p>
+          Solar systems are largely low-maintenance. The main requirement is periodic panel cleaning every 1-3 months depending on dust levels to maintain output efficiency. We recommend an annual performance inspection to check wiring integrity, inverter health, and structural fastening.
+        </p>
+        <p>
+          Our O&M service covers all of this: inspections, cleaning guidance, performance monitoring, and issue resolution, so your system keeps performing at its best long-term.
+        </p>
+      </div>
+    ),
+  },
+  {
+    q: "Do you assist with government subsidy process?",
+    a: (
+      <div className="space-y-3">
+        <p>
+          Yes. For residential customers in India, we provide end-to-end assistance with the PM Surya Ghar Muft Bijli Yojana subsidy, which offers:
+        </p>
+        <ul className="list-disc space-y-1 pl-5">
+          <li>₹30,000 for 1 kW systems</li>
+          <li>₹60,000 for 2 kW systems</li>
+          <li>₹78,000 for 3 kW and above</li>
+        </ul>
+        <p>
+          We handle the application, documentation, and follow-up so you don't have to navigate it alone.
+        </p>
+      </div>
+    ),
+  },
+  {
+    q: "What is your service response time?",
+    a: (
+      <div className="space-y-3">
+        <p>
+          We guarantee a 24-hour response to any service or support request. For O&M customers on a maintenance plan, issues are prioritised and escalated to our technical team immediately.
+        </p>
+        <p>
+          You can also reach us directly on WhatsApp for the fastest response. Most queries are answered within a few hours.
+        </p>
+      </div>
+    ),
+  },
 ];
 
 const Index = () => {
@@ -114,7 +203,7 @@ const Index = () => {
                 <Link to="/contact">
                   <Button variant="hero" size="lg">Get a Free Feasibility Check</Button>
                 </Link>
-                <a href="https://wa.me/919791322632" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/919500092381" target="_blank" rel="noopener noreferrer">
                   <Button variant="hero-secondary" size="lg">
                     <MessageCircle className="w-5 h-5 mr-1" /> WhatsApp Us
                   </Button>
@@ -243,7 +332,7 @@ const Index = () => {
                       </li>
                     ))}
                   </ul>
-                  <Link to="/contact">
+                  <Link to={s.to || "/contact"}>
                     <Button variant="solar">{s.cta} <ArrowRight className="w-4 h-4 ml-1" /></Button>
                   </Link>
                 </div>
@@ -319,18 +408,23 @@ const Index = () => {
             {
               city: "Chennai",
               desc: "Residential and commercial rooftop solar installations with local execution support.",
-              address: "4A3, Olympia Towers, Lattice Bridge Road, Adyar, Chennai – 600041",
-              phone: "+91 9791 322 632 | +91 9952224998",
-              phoneHref: "tel:+919791322632",
-              email: "Solarprojects@ski-g.com",
+              addresses: [
+                { label: "Registered Office", val: "4A3, Olympia Towers, Lattice Bridge Road, Adyar, Chennai – 600041" },
+                { label: "Branch Office", val: "SKI-G Energies, 2nd Floor, The Palms, 2/675, Balaji Nagar 1st St, Neelankarai, Chennai – 600115, Tamil Nadu." }
+              ],
+              phone: "+91 9500092381",
+              phoneHref: "tel:+919500092381",
+              emails: ["info@ski-g.com", "connect@ski-g.com"],
             },
             {
               city: "Dubai",
               desc: "Consultation and project execution aligned with UAE requirements.",
-              address: "Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba, PO 17965, Dubai, UAE",
-              phone: "+971 5060 537 28",
+              addresses: [
+                { label: "Office Address", val: "Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba, PO 17965, Dubai, UAE" }
+              ],
+              phone: "+971 506053728",
               phoneHref: "tel:+971506053728",
-              email: "m.imthiaz@ski-g.com",
+              emails: ["info@ski-g.com", "connect@ski-g.com"],
             },
           ].map((loc, i) => (
             <FadeIn key={i} delay={i * 0.1}>
@@ -340,10 +434,37 @@ const Index = () => {
                   <h3 className="font-heading font-semibold text-2xl">{loc.city}</h3>
                 </div>
                 <p className="text-muted-foreground">{loc.desc}</p>
-                <div className="flex flex-col gap-2 mt-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-accent" /> <a href={loc.phoneHref} className="hover:text-accent transition-colors">{loc.phone}</a></div>
-                  <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-accent" /> <a href={`mailto:${loc.email}`} className="hover:text-accent transition-colors">{loc.email}</a></div>
-                  <div className="flex items-start gap-2"><MapPin className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" /> <a href={`https://www.google.com/maps/search/${encodeURIComponent(loc.address)}`} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">{loc.address}</a></div>
+                <div className="flex flex-col gap-3 mt-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-accent" />
+                    <a href={loc.phoneHref} className="hover:text-accent transition-colors">{loc.phone}</a>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Mail className="w-4 h-4 text-accent mt-0.5" />
+                    <div className="flex flex-col">
+                      {loc.emails.map((email) => (
+                        <a key={email} href={`mailto:${email}`} className="hover:text-accent transition-colors">{email}</a>
+                      ))}
+                    </div>
+                  </div>
+                  {loc.addresses.map((addr) => (
+                    <div key={addr.val} className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                      <div>
+                        {loc.addresses.length > 1 && (
+                          <span className="text-xs font-semibold text-accent uppercase tracking-wider block">{addr.label}</span>
+                        )}
+                        <a
+                          href={`https://www.google.com/maps/search/${encodeURIComponent(addr.val)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-accent transition-colors"
+                        >
+                          {addr.val}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
                 </div>
                 <Link to="/contact" className="inline-block mt-5">
                   <Button variant="solar-outline">Contact Your Location</Button>
@@ -373,7 +494,7 @@ const Index = () => {
         </div>
         <FadeIn delay={0.2}>
           <div className="text-center mt-8">
-            <a href="https://wa.me/919791322632" target="_blank" rel="noopener noreferrer" className="inline-block">
+            <a href="https://wa.me/919500092381" target="_blank" rel="noopener noreferrer" className="inline-block">
               <Button variant="solar-outline">
                 <MessageCircle className="w-4 h-4 mr-1" /> Ask a Question on WhatsApp
               </Button>
@@ -412,7 +533,7 @@ const Index = () => {
             <Link to="/contact">
               <Button variant="hero" size="lg" className="whitespace-normal h-auto py-3">Get a Free Solar Feasibility Check + Storage Estimate</Button>
             </Link>
-            <a href="https://wa.me/919791322632" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/919500092381" target="_blank" rel="noopener noreferrer">
               <Button variant="hero-secondary" size="lg">
                 <MessageCircle className="w-5 h-5 mr-1" /> WhatsApp Us
               </Button>

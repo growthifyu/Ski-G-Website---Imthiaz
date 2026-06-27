@@ -84,7 +84,7 @@ const Privacy = () => (
         <p className="text-muted-foreground leading-relaxed mb-3">For privacy-related queries:</p>
         <p className="text-muted-foreground leading-relaxed">
           ski-G Energies Pvt. Ltd.<br />
-          Email: <a href="mailto:m.imthiaz@ski-g.com" className="text-accent hover:underline">m.imthiaz@ski-g.com</a><br />
+          Emails: <a href="mailto:info@ski-g.com" className="text-accent hover:underline">info@ski-g.com</a> | <a href="mailto:connect@ski-g.com" className="text-accent hover:underline">connect@ski-g.com</a><br />
           Chennai, India<br />
           Dubai, UAE
         </p>

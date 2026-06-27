@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeading, SectionSubheading, FadeIn } from "@/components/SectionComponents";
@@ -8,62 +8,7 @@ import { ArrowRight, MapPin, Ruler, Zap, Shield, Paintbrush, ImageIcon } from "l
 type FilterType = "all" | "residential" | "commercial";
 type LocationFilter = "all" | "chennai" | "dubai";
 
-const projects = [
-  {
-    title: "Residential Rooftop Installation – Chennai",
-    type: "residential" as const,
-    size: "5 kW",
-    location: "chennai" as const,
-    locationLabel: "Chennai",
-    property: "Independent House",
-    description: "Designed for optimized rooftop utilization with structured mounting and clean wiring layout.",
-  },
-  {
-    title: "Commercial Rooftop System – Chennai",
-    type: "commercial" as const,
-    size: "25 kW",
-    location: "chennai" as const,
-    locationLabel: "Chennai",
-    property: "Commercial Building",
-    description: "Load-based system design with professional installation and structured documentation.",
-  },
-  {
-    title: "Residential Solar Installation – Dubai",
-    type: "residential" as const,
-    size: "8 kW",
-    location: "dubai" as const,
-    locationLabel: "Dubai",
-    property: "Villa",
-    description: "Engineered for high-temperature performance with secure mounting and compliant wiring.",
-  },
-  {
-    title: "Commercial Solar Project – Dubai",
-    type: "commercial" as const,
-    size: "50 kW",
-    location: "dubai" as const,
-    locationLabel: "Dubai",
-    property: "Warehouse Facility",
-    description: "Large-scale installation with detailed load analysis and structured commissioning process.",
-  },
-  {
-    title: "Residential Rooftop – Chennai",
-    type: "residential" as const,
-    size: "3 kW",
-    location: "chennai" as const,
-    locationLabel: "Chennai",
-    property: "Apartment Terrace",
-    description: "Compact system sized accurately for actual consumption with minimal structural impact.",
-  },
-  {
-    title: "Industrial Solar Installation – Chennai",
-    type: "commercial" as const,
-    size: "100 kW",
-    location: "chennai" as const,
-    locationLabel: "Chennai",
-    property: "Industrial Unit",
-    description: "High-capacity system with peak load management and professional safety compliance.",
-  },
-];
+const projects: any[] = [];
 
 const executionStandards = [
   {
@@ -88,11 +33,288 @@ const executionStandards = [
   },
 ];
 
+// --- GOOGLE SHEETS DYNAMIC SETUP (NON-CODER FRIENDLY) ---
+// We read your spreadsheet directly from Google Drive (CSV format)
+const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/1vXmTo9CAZVOUCIMfq2sslbvfNKSY5btSOjM9rTrmZeA/export?format=csv"; 
+
+const parseCSV = (csvText: string) => {
+  const result: string[][] = [];
+  let row: string[] = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < csvText.length; i++) {
+    const char = csvText[i];
+    const nextChar = csvText[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        current += '"';
+        i++; // skip next quote
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      row.push(current.trim());
+      current = '';
+    } else if ((char === '\r' || char === '\n') && !inQuotes) {
+      if (char === '\r' && nextChar === '\n') {
+        i++; // skip \n
+      }
+      row.push(current.trim());
+      result.push(row);
+      row = [];
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  if (current || row.length > 0) {
+    row.push(current.trim());
+    result.push(row);
+  }
+
+  if (result.length < 2) return [];
+
+  // Extract and normalize spreadsheet headers to lowercase
+  const headers = result[0].map(h => h.toLowerCase().trim());
+  const parsed: any[] = [];
+
+  for (let i = 1; i < result.length; i++) {
+    const values = result[i];
+    if (values.length === 0 || (values.length === 1 && !values[0])) continue;
+
+    const rawItem: any = {};
+    headers.forEach((header, index) => {
+      let val = values[index] || "";
+      val = val.replace(/^"|"$/g, '').trim();
+      rawItem[header] = val;
+    });
+
+    // Map spreadsheet columns to visual projects shape
+    const item: any = {};
+
+    // 1. Title -> 'Project Name'
+    item.title = rawItem["project name"] || rawItem["title"] || "";
+
+    // 2. Type -> 'Project Type' (Industrial/Commercial mapped to 'commercial', others to 'residential')
+    const rawType = (rawItem["project type"] || "").toLowerCase();
+    if (rawType.includes("residential") || rawType.includes("home")) {
+      item.type = "residential";
+    } else {
+      item.type = "commercial";
+    }
+
+    // 3. Size -> 'System Capacity (kW/MW)'
+    item.size = rawItem["system capacity (kw/mw)"] || rawItem["size"] || "";
+
+    // 4. Location -> 'Location'
+    const rawLoc = (rawItem["location"] || "").toLowerCase();
+    if (rawLoc.includes("dubai") || rawLoc.includes("uae")) {
+      item.location = "dubai";
+    } else {
+      item.location = "chennai";
+    }
+    item.locationLabel = item.location === 'dubai' ? 'Dubai' : 'Chennai';
+
+    // 5. Property -> 'Installation Type' (plus company name if available)
+    const installType = rawItem["installation type"] || rawItem["property"] || "";
+    const clientName = rawItem["client / company name"] || "";
+    item.property = clientName ? `${installType} (Client: ${clientName})` : installType;
+
+    // 6. Description -> Combine 'Key Project Highlights' & 'Scope of Work by SKI-G'
+    const highlights = rawItem["key project highlights"] || "";
+    const scope = rawItem["scope of work by ski-g"] || "";
+    const descParts = [];
+    if (highlights) descParts.push(highlights);
+    if (scope) descParts.push(`Scope: ${scope}`);
+    item.description = descParts.join(". ") || rawItem["description"] || "";
+
+    // 7. Image -> Gather from multiple columns: 'google drive photo link 1', 'google drive photo link', and 'picture link 2' to 'picture link 5'
+    const imageList: string[] = [];
+    const possibleImageKeys = [
+      "google drive photo link 1",
+      "google drive photo link",
+      "picture link 2",
+      "picture link 3",
+      "picture link 4",
+      "picture link 5",
+      "image"
+    ];
+
+    possibleImageKeys.forEach(key => {
+      const val = rawItem[key];
+      if (val) {
+        val.split(',').forEach((link: string) => {
+          const trimmed = link.trim();
+          if (trimmed) {
+            imageList.push(trimmed);
+          }
+        });
+      }
+    });
+    item.images = imageList;
+
+    if (item.title) {
+      parsed.push(item);
+    }
+  }
+  return parsed;
+};
+
+// Converts standard Google Drive sharing links to direct raw image URLs
+const getImageUrl = (link: string) => {
+  if (!link) return "";
+  let url = link.replace(/^"|"$/g, '').trim();
+  
+  if (url.includes("drive.google.com")) {
+    let fileId = "";
+    const dMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (dMatch && dMatch[1]) {
+      fileId = dMatch[1];
+    } else {
+      const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (idMatch && idMatch[1]) {
+        fileId = idMatch[1];
+      }
+    }
+    
+    if (fileId) {
+      return `https://lh3.googleusercontent.com/d/${fileId}`;
+    }
+  }
+  return url;
+};
+
+// Component to handle image load state and error fallbacks cleanly (supports auto-swipe slideshow)
+const ProjectCardImage = ({ srcList, alt }: { srcList: string[]; alt: string }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Filter out empty or broken links and normalize them
+  const validUrls = (srcList || [])
+    .map(src => getImageUrl(src))
+    .filter(url => typeof url === "string" && url.trim() !== "")
+    .filter(url => !errors[url]);
+
+  // Handle active index out of bounds (e.g. if URLs fail and the array shrinks)
+  const activeIndex = currentIndex >= validUrls.length ? 0 : currentIndex;
+
+  // Set up auto-swipe interval (4 seconds) if there are multiple images, pausing on hover
+  useEffect(() => {
+    if (validUrls.length <= 1 || isHovered) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev >= validUrls.length - 1 ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [validUrls.length, isHovered]);
+
+  if (validUrls.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full w-full bg-muted">
+        <ImageIcon className="w-10 h-10 text-muted-foreground/30" />
+      </div>
+    );
+  }
+
+  const currentUrl = validUrls[activeIndex];
+
+  return (
+    <div 
+      className="relative w-full h-full group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <img 
+        src={currentUrl} 
+        alt={alt} 
+        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        onError={() => {
+          if (currentUrl) {
+            setErrors(prev => ({ ...prev, [currentUrl]: true }));
+          }
+        }}
+      />
+      
+      {validUrls.length > 1 && (
+        <>
+          {/* Left Arrow button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setCurrentIndex(prev => (prev === 0 ? validUrls.length - 1 : prev - 1));
+            }}
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/45 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70 text-xs font-bold z-10"
+            aria-label="Previous image"
+          >
+            &lt;
+          </button>
+          
+          {/* Right Arrow button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setCurrentIndex(prev => (prev >= validUrls.length - 1 ? 0 : prev + 1));
+            }}
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/45 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70 text-xs font-bold z-10"
+            aria-label="Next image"
+          >
+            &gt;
+          </button>
+          
+          {/* Slides dots */}
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+            {validUrls.map((_, idx) => (
+              <span
+                key={idx}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                  idx === activeIndex ? "bg-accent scale-125" : "bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
 const Projects = () => {
   const [typeFilter, setTypeFilter] = useState<FilterType>("all");
   const [locationFilter, setLocationFilter] = useState<LocationFilter>("all");
+  const [projectsList, setProjectsList] = useState(projects);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = projects.filter((p) => {
+  useEffect(() => {
+    if (!GOOGLE_SHEETS_CSV_URL) {
+      setLoading(false);
+      return;
+    }
+
+    const fetchSheetData = async () => {
+      try {
+        const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+        const text = await response.text();
+        const parsed = parseCSV(text);
+        if (parsed.length > 0) {
+          setProjectsList(parsed);
+        }
+      } catch (err) {
+        console.error("Error fetching project sheet data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSheetData();
+  }, []);
+
+  const filtered = projectsList.filter((p) => {
     if (typeFilter !== "all" && p.type !== typeFilter) return false;
     if (locationFilter !== "all" && p.location !== locationFilter) return false;
     return true;
@@ -167,39 +389,48 @@ const Projects = () => {
           </div>
         </FadeIn>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {filtered.map((project, i) => (
-            <FadeIn key={project.title} delay={i * 0.08}>
-              <div className="bg-card rounded-xl border border-border shadow-sm h-full flex flex-col overflow-hidden">
-                <div className="bg-muted flex items-center justify-center h-44">
-                  <ImageIcon className="w-10 h-10 text-muted-foreground/30" />
-                </div>
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-accent">
-                      {project.type}
-                    </span>
-                    <span className="text-xs text-muted-foreground">•</span>
-                    <span className="text-xs text-muted-foreground flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {project.locationLabel}
-                    </span>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
+            <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin mb-4" />
+            <p className="text-sm font-medium">Loading project portfolio...</p>
+          </div>
+        ) : (
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+              {filtered.map((project, i) => (
+                <FadeIn key={project.title} delay={i * 0.08}>
+                  <div className="bg-card rounded-xl border border-border shadow-sm h-full flex flex-col overflow-hidden">
+                    <div className="relative aspect-square w-full bg-muted overflow-hidden">
+                      <ProjectCardImage srcList={project.images} alt={project.title} />
+                    </div>
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-accent">
+                          {project.type}
+                        </span>
+                        <span className="text-xs text-muted-foreground">•</span>
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <MapPin className="w-3 h-3" /> {project.locationLabel}
+                        </span>
+                      </div>
+                      <h3 className="font-heading font-semibold text-lg mb-3">{project.title}</h3>
+                      <div className="text-sm text-muted-foreground space-y-1 mb-4">
+                        <p>System Size: {project.size}</p>
+                        <p>Property: {project.property}</p>
+                      </div>
+                      <p className="text-muted-foreground text-sm leading-relaxed mt-auto">
+                        {project.description}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="font-heading font-semibold text-lg mb-3">{project.title}</h3>
-                  <div className="text-sm text-muted-foreground space-y-1 mb-4">
-                    <p>System Size: {project.size}</p>
-                    <p>Property: {project.property}</p>
-                  </div>
-                  <p className="text-muted-foreground text-sm leading-relaxed mt-auto">
-                    {project.description}
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
+                </FadeIn>
+              ))}
+            </div>
 
-        {filtered.length === 0 && (
-          <p className="text-center text-muted-foreground mt-10">No projects match the selected filters.</p>
+            {filtered.length === 0 && (
+              <p className="text-center text-muted-foreground mt-10">No projects match the selected filters.</p>
+            )}
+          </>
         )}
       </Section>
 

@@ -48,6 +48,7 @@ const serviceBlocks = [
     items: ["Energy audit & storage sizing", "Lithium-ion / LFP battery solutions", "Hybrid solar + storage integration", "Peak shaving & load management", "Remote monitoring & BMS"],
     cta: "Explore BESS Solutions",
     image: bessImg,
+    to: "/ess",
   },
   {
     title: "Energy Optimization & Maintenance Services",
@@ -109,7 +110,7 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                  <Link to="/contact" className="inline-block mt-5">
+                  <Link to={s.to || "/contact"} className="inline-block mt-5">
                     <Button variant="solar">{s.cta} <ArrowRight className="w-4 h-4 ml-1" /></Button>
                   </Link>
                 </div>
