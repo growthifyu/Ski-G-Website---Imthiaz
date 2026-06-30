@@ -24,6 +24,9 @@ import {
   Scale 
 } from "lucide-react";
 import bessImg from "@/assets/bess-storage.jpg";
+import nexusImg from "@/assets/Nexus (2).png";
+import voltrix10Img from "@/assets/Voltrix 1.0.png";
+import voltrixEssImg from "@/assets/Voltrix ESS.png";
 
 // Product data for calculator
 const products = {
@@ -72,9 +75,9 @@ type ProductPictureVariant = "nexus" | "voltrix" | "aio" | "aether";
 
 const ProductPicture = ({ variant, title }: { variant: ProductPictureVariant; title: string }) => {
   const stockImages = {
-    nexus: "https://imrorwxhikrmln5q-static.micyjz.com/cloud/liBpjKkqloSRolojiqmlip/integrated-lithium-battery-power-supply-solution-for-data-centers.jpg",
-    voltrix: "https://imrorwxhikrmln5q-static.micyjz.com/cloud/lmBpjKkqloSRolijqniiio/snadi-bl-1000l-wall-mount-modular-energy-storage-system-solution.png",
-    aio: "https://5.imimg.com/data5/SELLER/Default/2022/9/QP/DH/HN/160337977/wall-mounted-inverter-with-lithium-battery-1000x1000.jpg",
+    nexus: nexusImg,
+    voltrix: voltrix10Img,
+    aio: voltrixEssImg,
     aether: "https://image.made-in-china.com/155f0j00AbaoqcnRftkN/Rack-Mount-Battery-Storage-Batteries-51-2V-170ah-Solar-LiFePO4-Energy-Storage-System.webp"
   }[variant];
 
